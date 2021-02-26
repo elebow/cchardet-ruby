@@ -18,17 +18,32 @@ module CChardet
   extern "int uchardet_handle_data(uchardet_t ud, const char *data, size_t len)"
   extern "void uchardet_data_end(uchardet_t ud)"
   extern "void uchardet_reset(uchardet_t ud)"
-  extern "const char *uchardet_get_charset(uchardet_t ud)"
-  extern "float uchardet_get_confidence(uchardet_t ud)"
+  extern "size_t uchardet_get_candidates(uchardet_t ud)"
+  extern "float uchardet_get_confidence(uchardet_t ud, size_t candidate)"
+  extern "const char *uchardet_get_encoding(uchardet_t ud, size_t candidate)"
+  extern "const char *uchardet_get_language(uchardet_t ud, size_t candidate)"
+  extern "void uchardet_weigh_language(uchardet_t ud, const char *language, float weight)"
+  extern "void uchardet_set_default_weight(uchardet_t ud, float weight)"
 
   def self.detect(str)
     uchardet_obj = uchardet_new
-    uchardet_handle_data(uchardet_obj, str, 1)
+    uchardet_handle_data(uchardet_obj, str, str.bytesize)
     uchardet_data_end(uchardet_obj)
 
-    {
-      charset: uchardet_get_charset(uchardet_obj).to_s,
-      confidence: uchardet_get_confidence(uchardet_obj)
-    }
+    num_candidates = uchardet_get_candidates(uchardet_obj)
+
+    (0..num_candidates - 1).map do |i|
+      {
+        encoding: uchardet_get_encoding(uchardet_obj, i).to_s,
+        confidence: uchardet_get_confidence(uchardet_obj, i),
+        language: uchardet_get_language(uchardet_obj, i).yield_self do |lang_ptr|
+                    if lang_ptr.null?
+                      nil
+                    else
+                      lang_ptr.to_s
+                    end
+                  end
+      }
+    end
   end
 end
