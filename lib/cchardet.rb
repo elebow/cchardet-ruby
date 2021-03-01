@@ -46,11 +46,7 @@ module CChardet
         encoding: uchardet_get_encoding(uchardet_obj, i).to_s,
         confidence: uchardet_get_confidence(uchardet_obj, i),
         language: uchardet_get_language(uchardet_obj, i).yield_self do |lang_ptr|
-                    if lang_ptr.null?
-                      nil
-                    else
-                      lang_ptr.to_s
-                    end
+                    lang_ptr.null? ? nil : lang_ptr.to_s
                   end
       }
     end
