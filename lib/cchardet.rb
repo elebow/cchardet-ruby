@@ -50,5 +50,7 @@ module CChardet
                   end
       }
     end
+  ensure
+    uchardet_delete(uchardet_obj)
   end
 end
