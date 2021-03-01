@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Eddie Lebow"]
   spec.email         = ["elebow@users.noreply.github.com"]
 
-  spec.summary       = "Ruby bindings for the Freedesktop.org uchardet library for encoding detection."
+  spec.summary       = "Ruby bindings for freedesktop.org's libuchardet, for encoding detection."
   #spec.description   = "TODO: Write a longer description or delete this line."
   spec.homepage      = "https://github.com/elebow/cchardet"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
