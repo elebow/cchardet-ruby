@@ -1,35 +1,86 @@
-# Cchardet
+# cchardet
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cchardet`. To experiment with that code, run `bin/console` for an interactive prompt.
+Ruby bindings for freedesktop.org's uchardet (<https://gitlab.freedesktop.org/uchardet/uchardet>).
 
-TODO: Delete this and the text above, and describe your gem
+By default, this gem depends on the system uchardet. Alternatively, it can build
+the unreleased `wip/Jehan/improved-API` branch of uchardet as a native extension.
+Note that uchardet's license terms may differ from those of this gem.
 
 ## Installation
+
+### System uchardet
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'cchardet'
+gem "cchardet"
 ```
 
 And then execute:
 
-    $ bundle install
+```
+bundle install
+```
 
 Or install it yourself as:
 
-    $ gem install cchardet
+```
+gem install cchardet
+```
+
+### Unreleased branch as native extension
+
+When using bundler:
+
+```
+bundle config set --global build.cchardet --with-unreleased-uchardet
+bundle install
+```
+
+When using gem directly:
+
+```
+gem install cchardet -- --with-unreleased-uchardet
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require "cchardet"
 
-## Development
+# ...
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+CChardet.detect(unknown_bytes)
+# released uchardet:
+#   { encoding: "UTF-8" }
+# unreleased native extension:
+#   { encoding: "UTF-8", confidence: 1.0, language: nil }
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+The only public interface is `CChardet.detect`, which takes a sequence of bytes.
+
+When using a released version of uchardet, it will return a hash with a single
+element, `encoding`, indicating the detected encoding of the byte stream. Future
+versions of uchardet are likely to provide additional fields (see <https://gitlab.freedesktop.org/uchardet/uchardet/-/issues/5#note_474963>).
+
+When using the unreleased native extension, it will return an array of hashes
+having three elements:
+
+- `encoding` – Detected encoding of the byte stream
+- `confidence` – Confidence of the encoding value
+- `language` – Detected language, if known
+
+The hashes are ordered by descending confidence.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/cchardet.
+Bug reports and pull requests are welcome on GitHub at <https://github.com/elebow/cchardet>.
+
+## License
+
+This gem is dedicated to the public domain. In jurisdictions where this is not
+possible, this gem is licensed to all under the least restrictive terms possible,
+and the author waives all waivable copyright rights.
+
+Note that uchardet, which may be compiled as a native extension, is covered by its
+own license.
