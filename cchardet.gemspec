@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Ruby bindings for freedesktop.org's libuchardet, for encoding detection."
   spec.homepage      = "https://github.com/elebow/cchardet-ruby"
-  spec.license       = "public domain"
+  spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   spec.metadata["homepage_uri"] = spec.homepage

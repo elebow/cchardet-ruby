@@ -78,9 +78,7 @@ Bug reports and pull requests are welcome on GitHub at <https://github.com/elebo
 
 ## License
 
-This gem is dedicated to the public domain. In jurisdictions where this is not
-possible, this gem is licensed to all under the least restrictive terms possible,
-and the author waives all waivable copyright rights.
+MIT License.
 
 Note that uchardet, which may be compiled as a native extension, is covered by its
 own license.
