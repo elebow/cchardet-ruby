@@ -1,3 +1,6 @@
+0.2.1
+  - Fix source URL in gemspec
+
 0.2.0
   - First functional release
 
