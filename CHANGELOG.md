@@ -1,3 +1,6 @@
+0.2.2
+  - Fix GitHub URL in gemspec, in one more place
+
 0.2.1
   - No functional changes
   - Fix source URL in gemspec
