@@ -48,8 +48,6 @@ gem install cchardet -- --with-unreleased-uchardet
 ```ruby
 require "cchardet"
 
-# ...
-
 CChardet.detect(unknown_bytes)
 # released uchardet:
 #   { encoding: "UTF-8" }
